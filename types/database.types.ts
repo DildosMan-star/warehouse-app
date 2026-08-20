@@ -89,7 +89,7 @@ export interface Database {
         Relationships: [];
       };
       stock: {
-        Row: Stock; 
+        Row: Stock;
         Insert: Partial<Stock>;
         Update: Partial<Stock>;
         Relationships: [];
