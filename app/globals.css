@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-paper text-ink font-body antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-wide;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-steel text-white hover:bg-steel-dark;
+  }
+  .btn-amber {
+    @apply btn bg-amber text-ink hover:bg-amber-soft;
+  }
+  .btn-ghost {
+    @apply btn bg-transparent text-ink hover:bg-line/50 border border-line;
+  }
+  .btn-danger {
+    @apply btn bg-danger text-white hover:opacity-90;
+  }
+  .input {
+    @apply w-full rounded-sm border border-line bg-white px-3 py-2 text-sm text-ink outline-none focus:border-steel focus:ring-1 focus:ring-steel;
+  }
+  .label {
+    @apply mb-1 block text-xs font-semibold uppercase tracking-wider text-ink/60;
+  }
+  .card {
+    @apply rounded-sm border border-line bg-white;
+  }
+  .table-shell {
+    @apply w-full border-collapse text-sm;
+  }
+  .table-shell th {
+    @apply border-b border-line bg-ink/[0.03] px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider text-ink/60;
+  }
+  .table-shell td {
+    @apply border-b border-line px-3 py-2 align-middle;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold;
+  }
+  .badge-good {
+    @apply badge bg-good/10 text-good;
+  }
+  .badge-warn {
+    @apply badge bg-amber/20 text-amber;
+  }
+  .badge-danger {
+    @apply badge bg-danger/10 text-danger;
+  }
+}
