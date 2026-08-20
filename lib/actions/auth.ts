@@ -17,6 +17,7 @@ export async function signIn(formData: FormData) {
   redirect("/dashboard");
 }
 
+
 export async function signUp(formData: FormData) {
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
