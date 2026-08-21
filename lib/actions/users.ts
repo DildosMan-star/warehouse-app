@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
 export async function updateUserRole(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const id = String(formData.get("id") ?? "");
   const role = String(formData.get("role") ?? "staff");
 
