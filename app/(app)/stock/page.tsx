@@ -6,7 +6,7 @@ export default async function StockPage({
 }: {
   searchParams: { error?: string; message?: string };
 }) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const [{ data: stockRows }, { data: products }, { data: warehouses }] = await Promise.all([
     supabase
