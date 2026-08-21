@@ -6,7 +6,7 @@ export default async function StockOutPage({
 }: {
   searchParams: { error?: string; message?: string };
 }) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const [{ data: products }, { data: warehouses }, { data: recent }] = await Promise.all([
     supabase.from("products").select("id, sku, name").order("name"),
