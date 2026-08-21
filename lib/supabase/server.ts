@@ -1,10 +1,19 @@
-import { createServerClient } from "@supabase/ssr";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import type { Database } from "@/types/database.types";
 
-export async function createClient() {
-  const cookieStore = await cookies();
+/**
+ * Supabase server client for Next.js 14.2.
+ *
+ * Keep this function synchronous because Next.js 14 exposes cookies()
+ * synchronously. Every Server Component / Server Action should use:
+ *
+ *   const supabase = createClient();
+ */
+export function createClient() {
+  const cookieStore = cookies();
 
-  return createServerClient(
+  return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -12,15 +21,14 @@ export async function createClient() {
         getAll() {
           return cookieStore.getAll();
         },
-
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
           try {
             cookiesToSet.forEach(({ name, value, options }) => {
               cookieStore.set(name, value, options);
             });
           } catch {
-            // ถ้าเรียกจาก Server Component
-            // middleware จะเป็นผู้จัดการ refresh session
+            // Server Components cannot always mutate response cookies.
+            // middleware.ts is responsible for refreshing the session.
           }
         },
       },

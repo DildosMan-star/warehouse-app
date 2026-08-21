@@ -7,7 +7,7 @@ export default async function ProductsPage({
 }: {
   searchParams: { error?: string };
 }) {
-  const supabase = await createClient();
+  const supabase = createClient();
   const { data: products } = await supabase
     .from("products")
     .select("*")

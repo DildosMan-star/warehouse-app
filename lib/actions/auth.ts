@@ -4,42 +4,65 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
 export async function signIn(formData: FormData) {
-  const email = String(formData.get("email") ?? "");
+  const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
 
-  const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (!email || !password) {
+    redirect(`/login?error=${encodeURIComponent("กรุณากรอกอีเมลและรหัสผ่าน")}`);
+  }
+
+  const supabase = createClient();
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
   if (error) {
-    redirect(`/login?error=${encodeURIComponent(error.message)}`);
+    const message =
+      error.message.toLowerCase().includes("email not confirmed")
+        ? "อีเมลยังไม่ได้ยืนยัน กรุณายืนยันอีเมลก่อนเข้าสู่ระบบ"
+        : error.message;
+
+    redirect(`/login?error=${encodeURIComponent(message)}`);
   }
 
   redirect("/dashboard");
 }
 
-
 export async function signUp(formData: FormData) {
-  const email = String(formData.get("email") ?? "");
+  const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
-  const fullName = String(formData.get("full_name") ?? "");
+  const fullName = String(formData.get("full_name") ?? "").trim();
 
-  const supabase = await createClient();
+  if (!email || !password || !fullName) {
+    redirect(
+      `/login?mode=signup&error=${encodeURIComponent("กรุณากรอกข้อมูลให้ครบ")}`
+    );
+  }
+
+  const supabase = createClient();
   const { error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { full_name: fullName } },
+    options: {
+      data: { full_name: fullName },
+    },
   });
 
   if (error) {
-    redirect(`/login?mode=signup&error=${encodeURIComponent(error.message)}`);
+    redirect(
+      `/login?mode=signup&error=${encodeURIComponent(error.message)}`
+    );
   }
 
-  // ผู้สมัครคนแรกในระบบจะได้สิทธิ์ admin อัตโนมัติจาก trigger ฝั่งฐานข้อมูล
-  redirect("/login?message=" + encodeURIComponent("สมัครสำเร็จ กรุณาเข้าสู่ระบบ"));
+  redirect(
+    "/login?message=" +
+      encodeURIComponent("สมัครสำเร็จ กรุณายืนยันอีเมล แล้วเข้าสู่ระบบ")
+  );
 }
 
 export async function signOut() {
-  const supabase = await createClient();
+  const supabase = createClient();
   await supabase.auth.signOut();
   redirect("/login");
 }

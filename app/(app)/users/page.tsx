@@ -14,7 +14,7 @@ export default async function UsersPage({
 }: {
   searchParams: { error?: string };
 }) {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const {
     data: { user },

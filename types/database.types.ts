@@ -64,49 +64,16 @@ export interface StockMovement {
 export interface Database {
   public: {
     Tables: {
-      profiles: {
-        Row: Profile;
-        Insert: Partial<Profile>;
-        Update: Partial<Profile>;
-        Relationships: [];
-      };
-      warehouses: {
-        Row: Warehouse;
-        Insert: Partial<Warehouse>;
-        Update: Partial<Warehouse>;
-        Relationships: [];
-      };
-      locations: {
-        Row: Location;
-        Insert: Partial<Location>;
-        Update: Partial<Location>;
-        Relationships: [];
-      };
-      products: {
-        Row: Product;
-        Insert: Partial<Product>;
-        Update: Partial<Product>;
-        Relationships: [];
-      };
-      stock: {
-        Row: Stock;
-        Insert: Partial<Stock>;
-        Update: Partial<Stock>;
-        Relationships: [];
-      };
+      profiles: { Row: Profile; Insert: Partial<Profile>; Update: Partial<Profile> };
+      warehouses: { Row: Warehouse; Insert: Partial<Warehouse>; Update: Partial<Warehouse> };
+      locations: { Row: Location; Insert: Partial<Location>; Update: Partial<Location> };
+      products: { Row: Product; Insert: Partial<Product>; Update: Partial<Product> };
+      stock: { Row: Stock; Insert: Partial<Stock>; Update: Partial<Stock> };
       stock_movements: {
         Row: StockMovement;
         Insert: Partial<StockMovement>;
         Update: Partial<StockMovement>;
-        Relationships: [];
       };
     };
-    Views: Record<string, never>;
-    Functions: Record<string, never>;
-    Enums: {
-      user_role: UserRole;
-      movement_type: MovementType;
-    };
-    CompositeTypes: Record<string, never>;
   };
 }
