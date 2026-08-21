@@ -8,7 +8,7 @@ const MOVEMENT_LABEL: Record<string, string> = {
 };
 
 export default async function DashboardPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const startOfToday = new Date();
   startOfToday.setHours(0, 0, 0, 0);
