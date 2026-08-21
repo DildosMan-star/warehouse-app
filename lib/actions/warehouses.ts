@@ -29,7 +29,7 @@ export async function saveWarehouse(formData: FormData) {
 }
 
 export async function deleteWarehouse(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const id = String(formData.get("id") ?? "");
 
   const { error } = await supabase.from("warehouses").delete().eq("id", id);
@@ -43,7 +43,7 @@ export async function deleteWarehouse(formData: FormData) {
 }
 
 export async function saveLocation(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const id = String(formData.get("id") ?? "");
   const warehouseId = String(formData.get("warehouse_id") ?? "");
 
@@ -68,7 +68,7 @@ export async function saveLocation(formData: FormData) {
 }
 
 export async function deleteLocation(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const id = String(formData.get("id") ?? "");
   const warehouseId = String(formData.get("warehouse_id") ?? "");
 
