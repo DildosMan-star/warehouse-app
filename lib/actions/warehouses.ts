@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
 export async function saveWarehouse(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const id = String(formData.get("id") ?? "");
 
   const payload = {
